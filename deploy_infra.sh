@@ -12,4 +12,4 @@ echo -e "\nUploading cf_templates to $S3_TARGET_DIR"
 aws s3 cp --recursive cf_templates $S3_TARGET_DIR
 
 # update templates
-./update_cf_stack.sh
+#./update_cf_stack.sh
