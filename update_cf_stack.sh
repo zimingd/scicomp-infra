@@ -50,7 +50,6 @@ fi
 
 STACK_NAME="accounts"
 CF_TEMPLATE="$STACK_NAME.yml"
-wget $CF_BUCKET_URL/$CF_TEMPLATE -O cf_templates/$CF_TEMPLATE
 echo -e "\nDeploying CF template $CF_TEMPLATE"
 UPDATE_CMD="aws cloudformation update-stack \
 --stack-name $STACK_NAME \
