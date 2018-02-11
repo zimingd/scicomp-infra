@@ -32,7 +32,7 @@ UPDATE_CMD="aws cloudformation update-stack \
 --stack-name $STACK_NAME \
 --capabilities CAPABILITY_NAMED_IAM \
 --notification-arns $CloudformationNotifyLambdaTopicArn \
---template-body file://cf_templates/$CF_TEMPLATE" \
+--template-body file://cf_templates/$CF_TEMPLATE \
 --parameters \
 ParameterKey=OperatorEmail,ParameterValue=\"$OperatorEmail\" \
 ParameterKey=FhcrcVpnCidrip,ParameterValue=\"$FhcrcVpnCidrip\""
@@ -56,7 +56,7 @@ UPDATE_CMD="aws cloudformation update-stack \
 --stack-name $STACK_NAME \
 --capabilities CAPABILITY_NAMED_IAM \
 --notification-arns $CloudformationNotifyLambdaTopicArn \
---template-body file://cf_templates/$CF_TEMPLATE" \
+--template-body file://cf_templates/$CF_TEMPLATE \
 --parameters \
 ParameterKey=InitNewUserPassword,ParameterValue=\"$InitNewUserPassword\""
 message=$($UPDATE_CMD 2>&1 1>/dev/null)
