@@ -4,7 +4,7 @@ CF_BUCKET_URL="https://s3.amazonaws.com/bootstrap-awss3cloudformationbucket-19qr
 
 STACK_NAME="bootstrap"
 CF_TEMPLATE="$STACK_NAME.yml"
-wget "$CF_BUCKET_URL/$CF_TEMPLATE -O cf_templates/$CF_TEMPLATE"
+wget $CF_BUCKET_URL/$CF_TEMPLATE -O cf_templates/$CF_TEMPLATE
 echo -e "\nDeploying CF template $CF_TEMPLATE"
 UPDATE_CMD="aws cloudformation update-stack \
 --stack-name $STACK_NAME \
@@ -26,7 +26,7 @@ fi
 
 STACK_NAME="essentials"
 CF_TEMPLATE="$STACK_NAME.yml"
-wget "$CF_BUCKET_URL/$CF_TEMPLATE -O cf_templates/$CF_TEMPLATE"
+wget $CF_BUCKET_URL/$CF_TEMPLATE -O cf_templates/$CF_TEMPLATE
 echo -e "\nDeploying CF template $CF_TEMPLATE"
 UPDATE_CMD="aws cloudformation update-stack \
 --stack-name $STACK_NAME \
@@ -50,7 +50,7 @@ fi
 
 STACK_NAME="accounts"
 CF_TEMPLATE="$STACK_NAME.yml"
-wget "$CF_BUCKET_URL/$CF_TEMPLATE -O cf_templates/$CF_TEMPLATE"
+wget $CF_BUCKET_URL/$CF_TEMPLATE -O cf_templates/$CF_TEMPLATE
 echo -e "\nDeploying CF template $CF_TEMPLATE"
 UPDATE_CMD="aws cloudformation update-stack \
 --stack-name $STACK_NAME \
