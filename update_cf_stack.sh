@@ -34,8 +34,8 @@ UPDATE_CMD="aws cloudformation update-stack \
 --notification-arns $CloudformationNotifyLambdaTopicArn \
 --template-body file://cf_templates/$CF_TEMPLATE \
 --parameters \
-ParameterKey=OperatorEmail,ParameterValue=\"$OperatorEmail\" \
-ParameterKey=FhcrcVpnCidrip,ParameterValue=\"$FhcrcVpnCidrip\""
+ParameterKey=OperatorEmail,ParameterValue=$OperatorEmail \
+ParameterKey=FhcrcVpnCidrip,ParameterValue=$FhcrcVpnCidrip"
 message=$($UPDATE_CMD 2>&1 1>/dev/null)
 error_code=$(echo $?)
 if [[ $error_code -ne 0 && $message =~ .*"No updates are to be performed".* ]]; then
