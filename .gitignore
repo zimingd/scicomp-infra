@@ -99,3 +99,14 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+.idea/
+git-crypt.key
+cf_templates/bootstrap.yml
+cf_templates/essentials.yml
+cf_templates/vpc.yml
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
