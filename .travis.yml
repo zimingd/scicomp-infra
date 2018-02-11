@@ -4,7 +4,7 @@ python: 3.4
 cache: pip
 install:
 - ./setup_git_crypt.sh
-- openssl aes-256-cbc -K $encrypted_01c81fac4a66_key -iv $encrypted_01c81fac4a66_iv -in git-crypt.key.enc -out git-crypt.key -d
+- openssl aes-256-cbc -K $encrypted_a59d35da2f36_key -iv $encrypted_a59d35da2f36_iv -in git-crypt.key.enc -out git-crypt.key -d
 - /tmp/git-crypt-master/git-crypt unlock ./git-crypt.key
 - rm -rf git-crypt.key
 - source env_vars && source env_vars.secret
