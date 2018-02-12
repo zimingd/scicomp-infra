@@ -33,7 +33,7 @@ UPDATE_CMD="aws cloudformation update-stack \
 --template-url $CF_BUCKET_URL/$CF_TEMPLATE \
 --parameters \
 ParameterKey=FhcrcVpnCidrip,ParameterValue=\"$FhcrcVpnCidrip\" \
-ParameterKey=OperatorEmail,ParameterValue=\"$OperatorEmail\"
+ParameterKey=OperatorEmail,ParameterValue=\"$OperatorEmail\""
 message=$($UPDATE_CMD 2>&1 1>/dev/null)
 error_code=$(echo $?)
 if [[ $error_code -ne 0 && $message =~ .*"No updates are to be performed".* ]]; then
