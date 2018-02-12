@@ -1,2 +1,2 @@
 # unencypted environment variables
-export OperatorEmail=admincentral@@sagebase.org
+export OperatorEmail=admincentral@sagebase.org
