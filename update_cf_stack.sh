@@ -88,7 +88,7 @@ ParameterKey=basicAdminEmail,ParameterValue=\"$OperatorEmail\" \
 ParameterKey=basicAdminPassword,ParameterValue=\"$SophosInitAdminPassword\" \
 ParameterKey=basicOrganization,ParameterValue="Sage-Bionetworks" \
 ParameterKey=basicCity,ParameterValue="Seattle" \
-ParameterKey=basicCountry,ParameterValue="United\ States" \
+ParameterKey=basicCountry,ParameterValue='United States' \
 ParameterKey=awsKeyName,ParameterValue="sophosutm" \
 ParameterKey=debugMode,ParameterValue="on""
 message=$($UPDATE_CMD 2>&1 1>/dev/null)
