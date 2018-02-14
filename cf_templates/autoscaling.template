@@ -338,7 +338,8 @@
         "South Africa",
         "Zambia",
         "Zimbabwe"
-      ]
+      ],
+      "Default": "United States"
     },
     "awsKeyName": {
       "Description": "Name of an existing EC2 KeyPair to enable SSH access.",
