@@ -90,7 +90,7 @@ ParameterKey=basicOrganization,ParameterValue="Sage-Bionetworks" \
 ParameterKey=basicCity,ParameterValue="Seattle" \
 ParameterKey=basicCountry,ParameterValue="United\ States" \
 ParameterKey=awsKeyName,ParameterValue="sophosutm" \
-ParameterKey=debugMode,ParameterValue="on"
+ParameterKey=debugMode,ParameterValue="on""
 message=$($UPDATE_CMD 2>&1 1>/dev/null)
 error_code=$(echo $?)
 if [[ $error_code -ne 0 && $message =~ .*"No updates are to be performed".* ]]; then
