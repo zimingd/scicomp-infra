@@ -81,7 +81,7 @@ UPDATE_CMD="aws cloudformation update-stack \
 ParameterKey=awsLicenseType,ParameterValue="Hourly" \
 ParameterKey=awsAvailabilityZone1,ParameterValue="us-east-1a" \
 ParameterKey=awsAvailabilityZone2,ParameterValue="us-east-1d" \
-ParameterKey=awsNetworkPrefix,ParameterValue=\"VpcSubnetPrefix\" \
+ParameterKey=awsNetworkPrefix,ParameterValue=\"$SophosVpcSubnetPrefix\" \
 ParameterKey=awsTrustedNetwork,ParameterValue=\"$FhcrcVpnCidrip\" \
 ParameterKey=basicHostname,ParameterValue="sophosutm" \
 ParameterKey=basicAdminEmail,ParameterValue=\"$OperatorEmail\" \
