@@ -101,7 +101,7 @@ Resources:
         -
           !Ref "AWSIAMAdminRole"
   # resources for auditors
-  JacobianAccessPolicy:
+  AWSIAMAuditorAccessPolicy:
     Type: 'AWS::IAM::ManagedPolicy'
     Properties:
         PolicyDocument:
@@ -119,20 +119,12 @@ Resources:
             - sqs:ReceiveMessage
             - sdb:Select
             Resource: "*"
-  AWSIAMJacobianUser:
-    Type: 'AWS::IAM::User'
-    Properties:
-      Groups:
-        - !Ref AWSIAMAuditorsGroup
-      LoginProfile:
-        Password: !Ref InitNewUserPassword
-        PasswordResetRequired: true
   AWSIAMAuditorsGroup:
     Type: 'AWS::IAM::Group'
     Properties:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/ReadOnlyAccess
-        - !Ref JacobianAccessPolicy
+        - !Ref AWSIAMAuditorAccessPolicy
         - !Ref AWSIAMEnforceMfaPolicy
   # resources for logging services
   AWSIAMSumoLogicUser:
@@ -173,12 +165,12 @@ Resources:
               - !Join
                 - ''
                 - - 'arn:aws:s3:::'
-                  - !ImportValue essentials-CloudtrailBucket
+                  - !ImportValue us-east-1-essentials-CloudtrailBucket
                   - '/*'
               - !Join
                 - ''
                 - - 'arn:aws:s3:::'
-                  - !ImportValue essentials-CloudtrailBucket
+                  - !ImportValue us-east-1-essentials-CloudtrailBucket
   AWSIAMLoggingServiceGroup:
     Type: 'AWS::IAM::Group'
     Properties:
@@ -290,12 +282,12 @@ Outputs:
   AWSIAMSumoLogicUser:
     Value: !Ref AWSIAMSumoLogicUser
     Export:
-      Name: !Sub '${AWS::StackName}-SumoLogicUser'
+      Name: !Sub '${AWS::Region}-${AWS::StackName}-SumoLogicUser'
   AWSIAMSumoLogicUserAccessKey:
     Value: !Ref AWSIAMSumoLogicUserAccessKey
     Export:
-      Name: !Sub '${AWS::StackName}-SumoLogicUserAccessKey'
+      Name: !Sub '${AWS::Region}-${AWS::StackName}-SumoLogicUserAccessKey'
   AWSIAMEnforceMfaPolicy:
     Value: !Ref AWSIAMEnforceMfaPolicy
     Export:
-      Name: !Sub '${AWS::StackName}-EnforceMfaPolicy'
+      Name: !Sub '${AWS::Region}-${AWS::StackName}-EnforceMfaPolicy'
