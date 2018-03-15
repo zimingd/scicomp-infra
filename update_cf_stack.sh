@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --output text --query 'Account')
-CF_BUCKET_URL="https://s3.amazonaws.com/bootstrap-awss3cloudformationbucket-19qromfd235z9"
+CF_BUCKET_URL="https://s3.amazonaws.com/bootstrap-awss3cloudformationbucket-114n2ojlbvj21"
 
 STACK_NAME="bootstrap"
 CF_TEMPLATE="$STACK_NAME.yml"
@@ -70,8 +70,8 @@ else
   echo $message
 fi
 
-STACK_NAME="vpc"
-CF_TEMPLATE="$STACK_NAME.yml"
+STACK_NAME="computevpc"
+CF_TEMPLATE="vpc.yml"
 echo -e "\nDeploying CF template $CF_BUCKET_URL/$CF_TEMPLATE"
 UPDATE_CMD="aws cloudformation update-stack \
 --stack-name $STACK_NAME \
@@ -93,7 +93,7 @@ else
   echo $message
 fi
 
-STACK_NAME="peer-vpn-vpc"
+STACK_NAME="peer-vpn-computevpc"
 CF_TEMPLATE="peer-route-config.yml"
 echo -e "\nDeploying CF template cf_templates/$CF_TEMPLATE"
 UPDATE_CMD="aws cloudformation update-stack \
@@ -102,9 +102,9 @@ UPDATE_CMD="aws cloudformation update-stack \
 --notification-arns $CloudformationNotifyLambdaTopicArn \
 --template-url $CF_BUCKET_URL/aws-infra/master/$CF_TEMPLATE \
 --parameters \
-ParameterKey=PeeringConnectionId,ParameterValue="pcx-0013f868" \
-ParameterKey=VpcPrivateRouteTable,ParameterValue="rtb-a5c01ed9" \
-ParameterKey=VpcPublicRouteTable,ParameterValue="rtb-08c01e74" \
+ParameterKey=PeeringConnectionId,ParameterValue="pcx-e6cd3b8e" \
+ParameterKey=VpcPrivateRouteTable,ParameterValue="rtb-5f73c623" \
+ParameterKey=VpcPublicRouteTable,ParameterValue="rtb-6e7fca12" \
 ParameterKey=VpnCidr,ParameterValue="10.1.0.0/16""
 message=$($UPDATE_CMD 2>&1 1>/dev/null)
 error_code=$(echo $?)

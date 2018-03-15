@@ -3,7 +3,7 @@ set -e
 
 # Need to upload TEMPLATES to S3 before validating due to template-body MAX 51K length
 # https://docs.aws.amazon.com/cli/latest/reference/cloudformation/validate-template.html#options
-S3_BUCKET="bootstrap-awss3cloudformationbucket-19qromfd235z9"
+S3_BUCKET="bootstrap-awss3cloudformationbucket-114n2ojlbvj21"
 S3_BUCKET_PATH="scicomp-infra/$TRAVIS_BRANCH"
 S3_BUCKET_URL="s3://$S3_BUCKET/$S3_BUCKET_PATH"
 TEMP_DIR="temp"
