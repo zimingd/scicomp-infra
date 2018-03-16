@@ -9,7 +9,7 @@ Install, configure and manage the AWS scicomp account.
 git-crypt unlock
 # set env vars
 source env_vars && source env_vars.secret
-# Run commands in update_cf_stack.sh to create or update CF stacks
+# Run commands in update_cf_stack.sh to update CF stacks
 ```
 
 The above should setup resources for the account.  Once the infrastructure for the account has been setup
