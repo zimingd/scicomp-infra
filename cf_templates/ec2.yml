@@ -67,6 +67,9 @@ Parameters:
       - cc2.8xlarge
       - cg1.4xlarge
     ConstraintDescription: must be a valid EC2 instance type.
+  JcConnectKey:
+    Description: Connection key used to let JC agent connect to a Jumpcloud account.
+    Type: String
   JcServiceApiKey:
     Description: The Jumpcloud service user API key
     Type: String
@@ -396,7 +399,11 @@ Resources:
               jq: []
           commands:
             01_jumpcloud_agent:
-              command: "curl --silent --show-error --header 'x-connect-key: 10ff3a27b18e10cfe554d0c777f0c31659c2908b' https://kickstart.jumpcloud.com/Kickstart | sudo bash"
+              command: !Join
+                - ''
+                - - "curl --silent --show-error --header 'x-connect-key: "
+                  - !Ref JcConnectKey
+                  - "' https://kickstart.jumpcloud.com/Kickstart | sudo bash"
         Config:
           commands:
             # allow agent time to register with jumpcloud account
