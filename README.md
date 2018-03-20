@@ -29,7 +29,11 @@ cloudformation create-stack --stack-name khai-instance1 \
 --parameters \
 ParameterKey=InstanceType,ParameterValue="t2.nano" \
 ParameterKey=JcServiceApiKey,ParameterValue="abcd111122223333aaaabbbbccccddddeeeeffff" \
-ParameterKey=JcSystemsGroupId,ParameterValue="1eabd8df45bf6d7d2a32d4ff"
+ParameterKey=JcSystemsGroupId,ParameterValue="1eabd8df45bf6d7d2a32d4ff" \
+ParameterKey=JcConnectKey,ParameterValue="0123456789abcdef0123456789abcdef01234567" \
+ParameterKey=KeyName,ParameterValue="scicomp" \
+ParameterKey=VpcName,ParameterValue="computevpc" \
+ParameterKey=VpcSubnet,ParameterValue="PrivateSubnet"
 ```
 *Note* - check default parameters in the template
 
