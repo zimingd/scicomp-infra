@@ -94,6 +94,15 @@ Parameters:
     Description: Name of an existing VPC to run the instance in.
     Type: String
     Default: computevpc
+  Department:
+    Description: The department for this resource (i.e. Computational Oncology)
+    Type: String
+  Project:
+    Description: The name of the project that this resource is used for (i.e. Resilience)
+    Type: String
+  OwnerEmail:
+    Description: The owner's email address for this resource (i.e. jsmith@sagebase.org)
+    Type: String
 Conditions:
   PublicEc2Resources: !Or [!Equals [ !Ref VpcSubnet, PublicSubnet ], !Equals [ !Ref VpcSubnet, PublicSubnet1 ], !Equals [ !Ref VpcSubnet, PublicSubnet2 ] ]
 Mappings:
@@ -467,12 +476,12 @@ Resources:
             - !Ref 'AWS::Region'
             - |+
       Tags:
-        - Key: "Division"
-          Value: "Systems Biology"
-        - Key: "Team"
-          Value: "Platform"
-        - Key: "Study"
-          Value: "Cancer"
+        - Key: "Department"
+          Value: !Ref Department
+        - Key: "Project"
+          Value: !Ref Project
+        - Key: "OwnerEmail"
+          Value: !Ref OwnerEmail
     CreationPolicy:
       ResourceSignal:
         Timeout: PT5M
