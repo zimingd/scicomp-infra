@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
+# deploy cloudformation templates
 # Need to upload TEMPLATES to S3 before validating due to template-body MAX 51K length
 # https://docs.aws.amazon.com/cli/latest/reference/cloudformation/validate-template.html#options
 S3_BUCKET="bootstrap-awss3cloudformationbucket-114n2ojlbvj21"
@@ -32,3 +33,10 @@ do
 done
 
 popd
+
+# deploy lambda code
+LAMBDA_ARTIFACTS_BUCKET="essentials-awss3lambdaartifactsbucket-1ef8sqdil160e"
+pushd lambda/jumpcloud
+zip -r ../jumpcloud.zip
+popd
+aws s3 cp lambda/jumpcloud.zip s3://$LAMBDA_ARTIFACTS_BUCKET/$S3_BUCKET_PATH
