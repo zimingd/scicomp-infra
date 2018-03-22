@@ -36,7 +36,9 @@ popd
 
 # deploy lambda code
 LAMBDA_ARTIFACTS_BUCKET="essentials-awss3lambdaartifactsbucket-1ef8sqdil160e"
+LAMBDA_PACKAGE="jumpcloud.zip"
 pushd lambda/jumpcloud
-zip -r ../jumpcloud.zip *
+zip -r ../$LAMBDA_PACKAGE *
 popd
-aws s3 cp lambda/jumpcloud.zip s3://$LAMBDA_ARTIFACTS_BUCKET/$S3_BUCKET_PATH
+echo -e "\nUploading lambda package to s3://$LAMBDA_ARTIFACTS_BUCKET/$S3_BUCKET_PATH/$LAMBDA_PACKAGE"
+aws s3 cp lambda/$LAMBDA_PACKAGE s3://$LAMBDA_ARTIFACTS_BUCKET/$S3_BUCKET_PATH/$LAMBDA_PACKAGE
