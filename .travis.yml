@@ -12,4 +12,5 @@ install:
 - ./setup_aws_cli.sh
 script:
 - ./deploy_infra.sh
+- ./update_cf_stack.sh
 - ./create_cf_stack.sh
