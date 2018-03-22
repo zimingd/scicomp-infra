@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
+COMMITTER_EMAIL="$(git log -1 $TRAVIS_COMMIT --pretty="%cE")"
+AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
 
 STACK_NAME="ec2-jsmith"
+DEPARTMENT="Platform"
+PROJECT="Infrastructure"
 INSTANCE_TYPE="t2.nano"
 CF_TEMPLATE="ec2.yml"
-UPDATE_CMD="aws cloudformation create-stack \
+CLI_CMD="aws cloudformation create-stack \
 --stack-name $STACK_NAME \
 --capabilities CAPABILITY_NAMED_IAM \
 --on-failure DELETE \
@@ -13,11 +17,14 @@ UPDATE_CMD="aws cloudformation create-stack \
 ParameterKey=VpcName,ParameterValue="computevpc" \
 ParameterKey=VpcSubnet,ParameterValue="PrivateSubnet" \
 ParameterKey=KeyName,ParameterValue="scicomp" \
+ParameterKey=Department,ParameterValue=\"$DEPARTMENT\" \
+ParameterKey=Project,ParameterValue=\"$PROJECT\" \
+ParameterKey=OwnerEmail,ParameterValue=\"$COMMITTER_EMAIL\" \
 ParameterKey=InstanceType,ParameterValue=\"$INSTANCE_TYPE\" \
 ParameterKey=JcServiceApiKey,ParameterValue=\"$JcServiceApiKey\" \
 ParameterKey=JcSystemsGroupId,ParameterValue=\"$JcSystemsGroupId\" \
 ParameterKey=JcConnectKey,ParameterValue=\"$JcConnectKey\""
-message=$($UPDATE_CMD 2>&1 1>/dev/null)
+message=$($CLI_CMD 2>&1 1>/dev/null)
 error_code=$(echo $?)
 if [[ $error_code -ne 0 && $message =~ .*"AlreadyExistsException".* ]]; then
   error_code=0
@@ -30,9 +37,11 @@ fi
 
 
 STACK_NAME="ec2-jsmith-2"
+DEPARTMENT="Platform"
+PROJECT="Infrastructure"
 INSTANCE_TYPE="t2.nano"
 CF_TEMPLATE="ec2.yml"
-UPDATE_CMD="aws cloudformation create-stack \
+CLI_CMD="aws cloudformation create-stack \
 --stack-name $STACK_NAME \
 --capabilities CAPABILITY_NAMED_IAM \
 --on-failure DELETE \
@@ -42,11 +51,14 @@ UPDATE_CMD="aws cloudformation create-stack \
 ParameterKey=VpcName,ParameterValue="computevpc" \
 ParameterKey=VpcSubnet,ParameterValue="PrivateSubnet" \
 ParameterKey=KeyName,ParameterValue="scicomp" \
+ParameterKey=Department,ParameterValue=\"$DEPARTMENT\" \
+ParameterKey=Project,ParameterValue=\"$PROJECT\" \
+ParameterKey=OwnerEmail,ParameterValue=\"$COMMITTER_EMAIL\" \
 ParameterKey=InstanceType,ParameterValue=\"$INSTANCE_TYPE\" \
 ParameterKey=JcServiceApiKey,ParameterValue=\"$JcServiceApiKey\" \
 ParameterKey=JcSystemsGroupId,ParameterValue=\"$JcSystemsGroupId\" \
 ParameterKey=JcConnectKey,ParameterValue=\"$JcConnectKey\""
-message=$($UPDATE_CMD 2>&1 1>/dev/null)
+message=$($CLI_CMD 2>&1 1>/dev/null)
 error_code=$(echo $?)
 if [[ $error_code -ne 0 && $message =~ .*"AlreadyExistsException".* ]]; then
   error_code=0
