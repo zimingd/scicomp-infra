@@ -550,15 +550,15 @@ Resources:
         Password: !Ref InitNewUserPassword
         PasswordResetRequired: true
 
-  AWSIAMZimingDongUser:
-    Type: 'AWS::IAM::User'
-    Properties:
-      UserName: ziming.dong@sagebase.org
-      Groups:
-        - !Ref AWSIAMDeveloperUsersGroup
-      LoginProfile:
-        Password: !Ref InitNewUserPassword
-        PasswordResetRequired: true
+  # AWSIAMZimingDongUser:
+  #   Type: 'AWS::IAM::User'
+  #   Properties:
+  #     UserName: ziming.dong@sagebase.org
+  #     Groups:
+  #       - !Ref AWSIAMDeveloperUsersGroup
+  #     LoginProfile:
+  #       Password: !Ref InitNewUserPassword
+  #       PasswordResetRequired: true
  
   AWSIAMDeveloperUsersGroup:
     Type: 'AWS::IAM::Group'
@@ -567,7 +567,8 @@ Resources:
         - arn:aws:iam::aws:policy/PowerUserAccess
         - !Ref AWSIAMEnforceMfaPolicy
         - !Ref AWSIAMDynamoDenyDeletePolicy
-        - !Ref AWSIAMRdsDenyDeletePolicy  AWSIAMAdminRole:
+        - !Ref AWSIAMRdsDenyDeletePolicy
+  AWSIAMAdminRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
