@@ -3,7 +3,7 @@ COMMITTER_EMAIL="$(git log -2 $TRAVIS_COMMIT --pretty="%cE"|grep -v -m1 noreply@
 AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
 
 # EC2 instance for demo
-STACK_NAME="ec2-test1"
+STACK_NAME="ec2-test2"
 DEPARTMENT="Platform"
 PROJECT="Infrastructure"
 INSTANCE_TYPE="t2.nano"
@@ -40,7 +40,10 @@ else
     echo -e "\nFailed getting status of $STACK_NAME"
     exit $status_code
   else
+    echo -e "\nSending provisioned resource info..."
     EC2_IP="$(aws cloudformation describe-stacks --stack-name $STACK_NAME | jq -r '.Stacks[0].Outputs[0].OutputValue')"
-    aws ses send-email --to "$COMMITTER_EMAIL" --subject "Scicomp Automated Provisioning" --text "Your new instance is $EC2_IP" --from "aws.scicomp@sagebase.org"
+    aws ses send-email --to "$COMMITTER_EMAIL" --subject "Scicomp Automated Provisioning" \
+    --text "An EC2 instance has been provisioned for you. To connect to this resource, login to the Sage VPN then type \"ssh <YOUR_JUMPCLOUD_USERNAME>@$EC2_IP\" (i.e. ssh jsmith@$EC2_IP)" \
+    --from "$OperatorEmail"
   fi
 fi
