@@ -42,9 +42,9 @@ function provision_ec2 {
       exit $l_status_code
     else
       echo -e "\nSending provisioned resource info..."
-      local EC2_IP="$(aws cloudformation describe-stacks --stack-name $l_stack_name | jq -r '.Stacks[0].Outputs[0].OutputValue')"
+      local l_instance_ip="$(aws cloudformation describe-stacks --stack-name $l_stack_name | jq -r '.Stacks[0].Outputs[0].OutputValue')"
       aws ses send-email --to "$COMMITTER_EMAIL" --subject "Scicomp Automated Provisioning" \
-      --text "An EC2 instance has been provisioned for you. To connect to this resource, login to the Sage VPN then type \"ssh <YOUR_JUMPCLOUD_USERNAME>@$EC2_IP\" (i.e. ssh jsmith@$EC2_IP)" \
+      --text "An EC2 instance has been provisioned for you. To connect to this resource, login to the Sage VPN then type \"ssh <YOUR_JUMPCLOUD_USERNAME>@$l_instance_ip\" (i.e. ssh jsmith@$l_instance_ip)" \
       --from "$OperatorEmail"
     fi
   fi
