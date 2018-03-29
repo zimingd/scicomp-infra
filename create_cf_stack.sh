@@ -3,7 +3,7 @@ COMMITTER_EMAIL="$(git log -2 $TRAVIS_COMMIT --pretty="%cE"|grep -v -m1 noreply@
 AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
 
 # EC2 instance for demo
-STACK_NAME="ec2-test1"
+STACK_NAME="ec2-test2"
 DEPARTMENT="Platform"
 PROJECT="Infrastructure"
 INSTANCE_TYPE="t2.nano"
