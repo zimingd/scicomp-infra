@@ -34,4 +34,13 @@ elif [[ $error_code -ne 0 ]]; then
   exit $error_code
 else
   echo -e "\nCreating stack $STACK_NAME with template cf_templates/$CF_TEMPLATE"
+  aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
+  status_code=$(echo $?)
+  if [[ status_code -eq 255 ]]; then
+    echo -e "\nFailed getting status of $STACK_NAME"
+    exit $status_code
+  else
+    EC2_IP="$(aws cloudformation describe-stacks --stack-name $STACK_NAME | jq -r '.Stacks[0].Outputs[0].OutputValue')"
+    aws ses send-email --to "$COMMITTER_EMAIL" --subject "Scicomp Automated Provisioning" --text "Your new instance is $EC2_IP" --from "aws.scicomp@sagebase.org"
+  fi
 fi
