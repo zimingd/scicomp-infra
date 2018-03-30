@@ -28,6 +28,8 @@ function provision_ec2 {
   ParameterKey=JcConnectKey,ParameterValue=\"$JcConnectKey\""
   local l_message=$($l_provision_cmd 2>&1 1>/dev/null)
   local l_status_code=$(echo $?)
+  echo -e "\nl_message: $l_message"
+  echo -e "\nl_status_code: $l_status_code"
   if [[ $l_status_code -ne 0 && $l_message =~ .*"AlreadyExistsException".* ]]; then
     echo -e "\nStack $l_stack_name already exists"
     l_status_code=0
