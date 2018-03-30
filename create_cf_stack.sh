@@ -50,6 +50,26 @@ function provision_ec2 {
   fi
 }
 
+# Diff changes to get stacks that have been removed and delete them from AWS
+function cleanup {
+  local l_git_del_lines=$(git diff -U0 | grep '^[-]' | grep -Ev '^(--- a/|\+\+\+ b/)' | grep "STACK_NAME=" | tr -d '"')
+
+  for git_del_line in $l_git_del_lines
+  do
+    IFS='=' read -ra stack_keypair <<< "$git_del_line"
+    for i in "${!stack_keypair[@]}"; do
+      if [ $i -eq 1 ]; then
+        l_stacks+=(${stack_keypair[$i]})
+      fi
+    done
+  done
+
+  for stack in "${l_stacks[@]}"; do
+    echo -e "\nDeleting CF stack $stack"
+    aws --profile scicomp.travis --region us-east-1 cloudformation delete-stack --stack-name $stack
+  done
+}
+
 # Provision the following resources
 STACK_NAME="ec2-test4"
 DEPARTMENT="Platform"
@@ -57,3 +77,8 @@ PROJECT="Infrastructure"
 INSTANCE_TYPE="t2.nano"
 CF_TEMPLATE="ec2.yml"
 provision_ec2 $STACK_NAME $DEPARTMENT $PROJECT $INSTANCE_TYPE $CF_TEMPLATE
+
+
+
+# Keep this at the end to delete stacks that have been removed
+cleanup
