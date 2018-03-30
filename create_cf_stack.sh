@@ -29,10 +29,12 @@ function provision_ec2 {
   local l_message=$($l_provision_cmd 2>&1 1>/dev/null)
   local l_status_code=$(echo $?)
   if [[ $l_status_code -ne 0 && $l_message =~ .*"AlreadyExistsException".* ]]; then
+    echo -e "\nStack $l_stack_name already exists"
     l_status_code=0
+    return $l_status_code
   elif [[ $l_status_code -ne 0 ]]; then
     echo $l_message
-    exit $l_status_code
+    return $l_status_code
   else
     echo -e "\nCreating stack $l_stack_name with template cf_templates/$l_cf_template ..."
     aws cloudformation wait stack-create-complete --stack-name $l_stack_name
@@ -48,6 +50,7 @@ function provision_ec2 {
       --from "$OperatorEmail"
     fi
   fi
+  return 0
 }
 
 # Diff changes to get stacks that have been removed and delete them from AWS
