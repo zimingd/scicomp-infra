@@ -66,7 +66,7 @@ function cleanup {
 
   for stack in "${l_stacks[@]}"; do
     echo -e "\nDeleting CF stack $stack"
-    aws --profile scicomp.travis --region us-east-1 cloudformation delete-stack --stack-name $stack
+    aws cloudformation delete-stack --stack-name $stack
   done
 }
 
