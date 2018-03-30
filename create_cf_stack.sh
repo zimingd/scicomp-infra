@@ -75,7 +75,7 @@ function cleanup {
 }
 
 # Provision the following resources
-STACK_NAME="ec2-test4"
+STACK_NAME="bastian1"   # name must be unique
 DEPARTMENT="Platform"
 PROJECT="Infrastructure"
 INSTANCE_TYPE="t2.nano"
