@@ -30,13 +30,12 @@ function provision_ec2 {
   local l_status_code=$(echo $?)
   echo -e "\nl_message: $l_message"
   echo -e "\nl_status_code: $l_status_code"
-  if [[ $l_status_code -ne 0 && $l_message =~ .*"AlreadyExistsException".* ]]; then
-    echo -e "\nStack $l_stack_name already exists"
-    l_status_code=0
-    return $l_status_code
-  elif [[ $l_status_code -ne 0 ]]; then
+  if [[ $l_status_code -ne 0 ]]; then
     echo $l_message
     return $l_status_code
+  elif [[ $l_message =~ .*"AlreadyExistsException".* ]]; then
+    echo -e "\nStack $l_stack_name already exists"
+    return 0
   else
     echo -e "\nCreating stack $l_stack_name with template cf_templates/$l_cf_template ..."
     aws cloudformation wait stack-create-complete --stack-name $l_stack_name
