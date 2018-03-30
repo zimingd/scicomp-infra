@@ -82,6 +82,12 @@ INSTANCE_TYPE="t2.nano"
 CF_TEMPLATE="ec2.yml"
 provision_ec2 $STACK_NAME $DEPARTMENT $PROJECT $INSTANCE_TYPE $CF_TEMPLATE
 
+STACK_NAME="ec2-test5"
+DEPARTMENT="Platform"
+PROJECT="Infrastructure"
+INSTANCE_TYPE="t2.nano"
+CF_TEMPLATE="ec2.yml"
+provision_ec2 $STACK_NAME $DEPARTMENT $PROJECT $INSTANCE_TYPE $CF_TEMPLATE
 
 # Keep this at the end to delete stacks that have been removed
 cleanup
