@@ -52,7 +52,7 @@ function provision_ec2 {
 
 # Diff changes to get stacks that have been removed and delete them from AWS
 function cleanup {
-  local l_git_del_lines=$(git diff -U0 | grep '^[-]' | grep -Ev '^(--- a/|\+\+\+ b/)' | grep "STACK_NAME=" | tr -d '"')
+  local l_git_del_lines=$(git diff -U0 HEAD~1 | grep '^[-]' | grep -Ev '^(--- a/|\+\+\+ b/)' | grep "\-STACK_NAME=" | tr -d '"')
 
   for git_del_line in $l_git_del_lines
   do
@@ -72,13 +72,6 @@ function cleanup {
 
 # Provision the following resources
 STACK_NAME="ec2-test4"
-DEPARTMENT="Platform"
-PROJECT="Infrastructure"
-INSTANCE_TYPE="t2.nano"
-CF_TEMPLATE="ec2.yml"
-provision_ec2 $STACK_NAME $DEPARTMENT $PROJECT $INSTANCE_TYPE $CF_TEMPLATE
-
-STACK_NAME="ec2-test5"
 DEPARTMENT="Platform"
 PROJECT="Infrastructure"
 INSTANCE_TYPE="t2.nano"
