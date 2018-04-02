@@ -10,6 +10,7 @@ Resources:
   # 1. Detach or remove the following user resources: login profile, attached
   #    MFA device, access-keys, ssh-keys, and policies.
   # 2. Detach the user from all groups.
+  
   AWSIAMXavierSchildwachterUser:
     Type: 'AWS::IAM::User'
     Properties:
@@ -19,6 +20,7 @@ Resources:
       LoginProfile:
         Password: !Ref InitNewUserPassword
         PasswordResetRequired: true
+
   AWSIAMKhaiDoUser:
     Type: 'AWS::IAM::User'
     Properties:
@@ -28,12 +30,12 @@ Resources:
       LoginProfile:
         Password: !Ref InitNewUserPassword
         PasswordResetRequired: true
+
   AWSIAMDeveloperUsersGroup:
     Type: 'AWS::IAM::Group'
     Properties:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/PowerUserAccess
-        - arn:aws:iam::aws:policy/IAMReadOnlyAccess
         - !Ref AWSIAMEnforceMfaPolicy
         - !Ref AWSIAMDynamoDenyDeletePolicy
         - !Ref AWSIAMRdsDenyDeletePolicy
@@ -127,15 +129,6 @@ Resources:
         - !Ref AWSIAMAuditorAccessPolicy
         - !Ref AWSIAMEnforceMfaPolicy
   # resources for logging services
-  AWSIAMSumoLogicUser:
-    Type: 'AWS::IAM::User'
-    Properties:
-      Groups:
-        - !Ref AWSIAMLoggingServiceGroup
-  AWSIAMSumoLogicUserAccessKey:
-    Type: 'AWS::IAM::AccessKey'
-    Properties:
-      UserName: !Ref AWSIAMSumoLogicUser
   IAMLoggingServiceManagedPolicy:
     Type: "AWS::IAM::ManagedPolicy"
     Properties:
@@ -279,14 +272,6 @@ Resources:
               BoolIfExists:
                 'aws:MultiFactorAuthPresent': 'false'
 Outputs:
-  AWSIAMSumoLogicUser:
-    Value: !Ref AWSIAMSumoLogicUser
-    Export:
-      Name: !Sub '${AWS::Region}-${AWS::StackName}-SumoLogicUser'
-  AWSIAMSumoLogicUserAccessKey:
-    Value: !Ref AWSIAMSumoLogicUserAccessKey
-    Export:
-      Name: !Sub '${AWS::Region}-${AWS::StackName}-SumoLogicUserAccessKey'
   AWSIAMEnforceMfaPolicy:
     Value: !Ref AWSIAMEnforceMfaPolicy
     Export:
