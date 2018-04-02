@@ -70,6 +70,7 @@ Parameters:
   JcConnectKey:
     Description: Connection key used to let JC agent connect to a Jumpcloud account.
     Type: String
+    NoEcho: true
   JcServiceApiKey:
     Description: The Jumpcloud service user API key
     Type: String
@@ -77,6 +78,7 @@ Parameters:
   JcSystemsGroupId:
     Description: Put EC2 into this Jumpcloud systems group
     Type: String
+    NoEcho: true
   VpcSubnet:
     Description: Name of an existing VPC subnet to run the instance in.
     Type: String

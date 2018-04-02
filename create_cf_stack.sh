@@ -1,70 +1,18 @@
 #!/usr/bin/env bash
-COMMITTER_EMAIL="$(git log -1 $TRAVIS_COMMIT --pretty="%cE")"
-AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
 
-STACK_NAME="ec2-jsmith"
+source ./provision_utils.sh
+
+# Provision the following resources
+# Notes:
+# * STACK_NAME must be unique and can contain only alphanumeric characters (case sensitive) and hyphens.
+#   It must start with an alphabetic character and cannot be longer than 128 characters.
+STACK_NAME="bastian1"
 DEPARTMENT="Platform"
 PROJECT="Infrastructure"
 INSTANCE_TYPE="t2.nano"
 CF_TEMPLATE="ec2.yml"
-CLI_CMD="aws cloudformation create-stack \
---stack-name $STACK_NAME \
---capabilities CAPABILITY_NAMED_IAM \
---on-failure DELETE \
---notification-arns $CloudformationNotifyLambdaTopicArn \
---template-body file://cf_templates/$CF_TEMPLATE \
---parameters \
-ParameterKey=VpcName,ParameterValue="computevpc" \
-ParameterKey=VpcSubnet,ParameterValue="PrivateSubnet" \
-ParameterKey=KeyName,ParameterValue="scicomp" \
-ParameterKey=Department,ParameterValue=\"$DEPARTMENT\" \
-ParameterKey=Project,ParameterValue=\"$PROJECT\" \
-ParameterKey=OwnerEmail,ParameterValue=\"$COMMITTER_EMAIL\" \
-ParameterKey=InstanceType,ParameterValue=\"$INSTANCE_TYPE\" \
-ParameterKey=JcServiceApiKey,ParameterValue=\"$JcServiceApiKey\" \
-ParameterKey=JcSystemsGroupId,ParameterValue=\"$JcSystemsGroupId\" \
-ParameterKey=JcConnectKey,ParameterValue=\"$JcConnectKey\""
-message=$($CLI_CMD 2>&1 1>/dev/null)
-error_code=$(echo $?)
-if [[ $error_code -ne 0 && $message =~ .*"AlreadyExistsException".* ]]; then
-  error_code=0
-elif [[ $error_code -ne 0 ]]; then
-  echo $message
-  exit $error_code
-else
-  echo -e "\nCreating stack $STACK_NAME with template cf_templates/$CF_TEMPLATE"
-fi
+provision_ec2 $STACK_NAME $DEPARTMENT $PROJECT $INSTANCE_TYPE $CF_TEMPLATE
 
 
-STACK_NAME="ec2-jsmith-2"
-DEPARTMENT="Platform"
-PROJECT="Infrastructure"
-INSTANCE_TYPE="t2.nano"
-CF_TEMPLATE="ec2.yml"
-CLI_CMD="aws cloudformation create-stack \
---stack-name $STACK_NAME \
---capabilities CAPABILITY_NAMED_IAM \
---on-failure DELETE \
---notification-arns $CloudformationNotifyLambdaTopicArn \
---template-body file://cf_templates/$CF_TEMPLATE \
---parameters \
-ParameterKey=VpcName,ParameterValue="computevpc" \
-ParameterKey=VpcSubnet,ParameterValue="PrivateSubnet" \
-ParameterKey=KeyName,ParameterValue="scicomp" \
-ParameterKey=Department,ParameterValue=\"$DEPARTMENT\" \
-ParameterKey=Project,ParameterValue=\"$PROJECT\" \
-ParameterKey=OwnerEmail,ParameterValue=\"$COMMITTER_EMAIL\" \
-ParameterKey=InstanceType,ParameterValue=\"$INSTANCE_TYPE\" \
-ParameterKey=JcServiceApiKey,ParameterValue=\"$JcServiceApiKey\" \
-ParameterKey=JcSystemsGroupId,ParameterValue=\"$JcSystemsGroupId\" \
-ParameterKey=JcConnectKey,ParameterValue=\"$JcConnectKey\""
-message=$($CLI_CMD 2>&1 1>/dev/null)
-error_code=$(echo $?)
-if [[ $error_code -ne 0 && $message =~ .*"AlreadyExistsException".* ]]; then
-  error_code=0
-elif [[ $error_code -ne 0 ]]; then
-  echo $message
-  exit $error_code
-else
-  echo -e "\nCreating stack $STACK_NAME with template cf_templates/$CF_TEMPLATE"
-fi
+# Keep this at the end to automatically de-provision stacks.
+deprovision
