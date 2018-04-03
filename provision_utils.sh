@@ -7,9 +7,9 @@
 COMMITTER_EMAIL="$(git log -2 $TRAVIS_COMMIT --pretty="%cE"|grep -v -m1 noreply@github.com)"
 AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
 
-# function to provision EC2 instances
+# Function to provision EC2 instances. The stack_name is always prepended by "ap-"
 function provision_ec2 {
-  local l_stack_name=$1
+  local l_stack_name="ap-$1"
   local l_department=$2
   local l_project=$3
   local l_instance_type=$4
@@ -60,7 +60,7 @@ function provision_ec2 {
   return 0
 }
 
-# Git diff changes to get stacks that have been removed and delete them from AWS
+# Use git diff to find stacks that have been removed and delete them from AWS
 function deprovision {
   local l_git_del_lines=$(git diff -U0 HEAD~1 | grep '^[-]' | grep -Ev '^(--- a/|\+\+\+ b/)' | grep "\-STACK_NAME=" | tr -d '"')
 
@@ -69,7 +69,7 @@ function deprovision {
     IFS='=' read -ra stack_keypair <<< "$git_del_line"
     for i in "${!stack_keypair[@]}"; do
       if [ $i -eq 1 ]; then
-        l_stacks+=(${stack_keypair[$i]})
+        l_stacks+=("ap-${stack_keypair[$i]}")
       fi
     done
   done
