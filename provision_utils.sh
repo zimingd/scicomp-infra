@@ -14,10 +14,7 @@ function provision_ec2 {
   local l_project=$3
   local l_instance_type=$4
   local l_cf_template=$5
-  local l_subnet="PrivateSubnet"
-  if [ "$6" != "" ]; then
-    l_subnet=$6
-  fi
+  local l_subnet=${6:-"PrivateSubnet"}
   local l_provision_cmd="aws cloudformation create-stack \
   --stack-name $l_stack_name \
   --capabilities CAPABILITY_NAMED_IAM \
