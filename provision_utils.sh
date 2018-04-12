@@ -14,6 +14,10 @@ function provision_ec2 {
   local l_project=$3
   local l_instance_type=$4
   local l_cf_template=$5
+  local l_subnet="PrivateSubnet"
+  if [ "$6" != "" ]; then
+    l_subnet=$6
+  fi
   local l_provision_cmd="aws cloudformation create-stack \
   --stack-name $l_stack_name \
   --capabilities CAPABILITY_NAMED_IAM \
@@ -22,7 +26,7 @@ function provision_ec2 {
   --template-body file://cf_templates/$l_cf_template \
   --parameters \
   ParameterKey=VpcName,ParameterValue="computevpc" \
-  ParameterKey=VpcSubnet,ParameterValue="PrivateSubnet" \
+  ParameterKey=VpcSubnet,ParameterValue="$l_subnet" \
   ParameterKey=KeyName,ParameterValue="scicomp" \
   ParameterKey=Department,ParameterValue=\"$l_department\" \
   ParameterKey=Project,ParameterValue=\"$l_project\" \
