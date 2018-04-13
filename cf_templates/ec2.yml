@@ -105,8 +105,12 @@ Parameters:
   OwnerEmail:
     Description: The owner's email address for this resource (i.e. jsmith@sagebase.org)
     Type: String
+  AMIId:
+    Description: ID of the AMI to deploy
+    Type: String
 Conditions:
   PublicEc2Resources: !Or [!Equals [ !Ref VpcSubnet, PublicSubnet ], !Equals [ !Ref VpcSubnet, PublicSubnet1 ], !Equals [ !Ref VpcSubnet, PublicSubnet2 ] ]
+  HasAMIId: !Not [!Equals ["", !Ref AMIId]]
 Mappings:
   AWSInstanceType2Arch:
     t1.micro:
@@ -433,13 +437,7 @@ Resources:
                    - !Ref JcServiceApiKey
                    - "' -d '{\"op\": \"add\",\"type\": \"system\",\"id\": \"'$JC_SYSTEM_ID'\"}'"
     Properties:
-      ImageId: !FindInMap
-        - AWSRegionArch2AMI
-        - !Ref 'AWS::Region'
-        - !FindInMap
-          - AWSInstanceType2Arch
-          - !Ref InstanceType
-          - Arch
+      ImageId: !If [HasAMIId, !Ref AMIId, !FindInMap [AWSRegionArch2AMI, !Ref 'AWS::Region', !FindInMap [AWSInstanceType2Arch, !Ref InstanceType, Arch]]]
       InstanceType: !Ref InstanceType
       KeyName: !Ref KeyName
       NetworkInterfaces:
