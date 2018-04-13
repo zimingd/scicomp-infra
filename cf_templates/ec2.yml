@@ -108,6 +108,7 @@ Parameters:
   AMIId:
     Description: ID of the AMI to deploy
     Type: String
+    Default: ""
 Conditions:
   PublicEc2Resources: !Or [!Equals [ !Ref VpcSubnet, PublicSubnet ], !Equals [ !Ref VpcSubnet, PublicSubnet1 ], !Equals [ !Ref VpcSubnet, PublicSubnet2 ] ]
   HasAMIId: !Not [!Equals ["", !Ref AMIId]]
