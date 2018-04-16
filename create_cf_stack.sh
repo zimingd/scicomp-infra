@@ -13,12 +13,5 @@ INSTANCE_TYPE="t2.nano"
 CF_TEMPLATE="ec2.yml"
 provision_ec2 $STACK_NAME $DEPARTMENT $PROJECT $INSTANCE_TYPE $CF_TEMPLATE
 
-STACK_NAME="belltown"
-DEPARTMENT="SciComp"
-PROJECT="Infrastructure"
-INSTANCE_TYPE="t2.large"
-CF_TEMPLATE="ec2.yml"
-provision_ec2 $STACK_NAME $DEPARTMENT $PROJECT $INSTANCE_TYPE $CF_TEMPLATE
-
 # Keep this at the end to automatically de-provision stacks.
 deprovision
