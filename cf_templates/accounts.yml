@@ -36,6 +36,7 @@ Resources:
     Properties:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/PowerUserAccess
+        - arn:aws:iam::aws:policy/IAMReadOnlyAccess
         - !Ref AWSIAMEnforceMfaPolicy
         - !Ref AWSIAMDynamoDenyDeletePolicy
         - !Ref AWSIAMRdsDenyDeletePolicy
