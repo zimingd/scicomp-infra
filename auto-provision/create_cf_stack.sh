@@ -10,7 +10,7 @@ STACK_NAME="bastian1"
 DEPARTMENT="Platform"
 PROJECT="Infrastructure"
 INSTANCE_TYPE="t2.nano"
-CF_TEMPLATE="ec2.yml"
+CF_TEMPLATE="ec2.yaml"
 provision_ec2 $STACK_NAME $DEPARTMENT $PROJECT $INSTANCE_TYPE $CF_TEMPLATE
 
 # Keep this at the end to automatically de-provision stacks.
