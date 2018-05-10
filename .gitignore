@@ -113,3 +113,6 @@ cf_templates/vpc.yml
 
 # sceptre artifacts
 remote-templates
+
+# lambda artifacts
+lambda/*.zip
