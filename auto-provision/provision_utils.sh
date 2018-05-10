@@ -20,7 +20,7 @@ function provision_ec2 {
   --capabilities CAPABILITY_NAMED_IAM \
   --on-failure DELETE \
   --notification-arns $CloudformationNotifyLambdaTopicArn \
-  --template-body file://cf_templates/$l_cf_template \
+  --template-body file://$l_cf_template \
   --parameters \
   ParameterKey=VpcName,ParameterValue="computevpc" \
   ParameterKey=VpcSubnet,ParameterValue="$l_subnet" \
@@ -41,7 +41,7 @@ function provision_ec2 {
     echo -e "\nStack $l_stack_name already exists"
     return 0
   else
-    echo -e "\nCreating stack $l_stack_name with template cf_templates/$l_cf_template ..."
+    echo -e "\nCreating stack $l_stack_name with template $l_cf_template ..."
     # wait for stack deployment to complete to get the ip address of the instance
     aws cloudformation wait stack-create-complete --stack-name $l_stack_name
     l_status_code=$(echo $?)
