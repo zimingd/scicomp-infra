@@ -7,4 +7,4 @@ parameters:
   VpnCidr: 10.1.0.0/16
 hooks:
   before_update:
-    - !cmd "aws --profile {{ var.profile }} s3 cp s3://bootstrap-awss3cloudformationbucket-19qromfd235z9/aws-infra/master/peer-route-config.yml ./remote-templates/peer-route-config.yaml"
+    - !cmd "aws --profile {{ var.profile }} s3 cp s3://{{ environment_variable.AwsInfraCfBucket }}/aws-infra/master/peer-route-config.yml ./remote-templates/peer-route-config.yaml"
