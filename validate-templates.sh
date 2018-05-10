@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Validate all templates in the templates folder
+# Validate all templates managed by sceptre
 TEMPLATES=templates/*
 for template in $TEMPLATES
 do

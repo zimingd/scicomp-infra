@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-# upload lambda packages
+# upload lambda packages to S3 bucket
 S3_BUCKET="essentials-awss3lambdaartifactsbucket-1ef8sqdil160e"
 S3_BUCKET_PATH="scicomp-infra/$TRAVIS_BRANCH"
 
