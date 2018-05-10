@@ -116,3 +116,6 @@ remote-templates
 
 # lambda artifacts
 lambda/*.zip
+
+# MAC Crap
+.DS_Store
