@@ -25,7 +25,7 @@ you can access and view the account using the [AWS console](https://AWS-account-
 aws --profile scicomp --region us-east-1 \
 cloudformation create-stack --stack-name khai-instance1 \
 --capabilities CAPABILITY_NAMED_IAM \
---template-url https://s3.amazonaws.com/bootstrap-awss3cloudformationbucket-114n2ojlbvj21/scicomp-infra/master/accounts.yml \
+--template-url https://s3.amazonaws.com/bootstrap-awss3cloudformationbucket-114n2ojlbvj21/scicomp-infra/master/accounts.yaml \
 --parameters \
 ParameterKey=InstanceType,ParameterValue="t2.nano" \
 ParameterKey=JcServiceApiKey,ParameterValue="abcd111122223333aaaabbbbccccddddeeeeffff" \

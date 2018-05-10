@@ -6,4 +6,4 @@ parameters:
   VpcPeeringRequesterAwsAccountId: "{{ environment_variable.AdmincentralAwsAccountId }}"
 hooks:
   before_update:
-    - !cmd "aws --profile {{ var.profile }} s3 cp s3://{{ environment_variable.AwsInfraCfBucket }}/aws-infra/master/essentials.yml ./remote-templates/essentials.yaml"
+    - !cmd "aws --profile {{ var.profile }} s3 cp s3://{{ environment_variable.AwsInfraCfBucket }}/aws-infra/master/essentials.yaml ./remote-templates/essentials.yaml"
