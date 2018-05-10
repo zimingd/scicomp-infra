@@ -1,6 +1,6 @@
 sudo: false
 language: python
-python: 3.4
+python: 3.5
 cache: pip
 install:
 - ./setup_git_crypt.sh
@@ -10,7 +10,8 @@ install:
 - source env_vars && source env_vars.secret
 - /tmp/git-crypt-master/git-crypt lock
 - ./setup_aws_cli.sh
+- pip install sceptre
 script:
-- ./deploy_infra.sh
-- ./update_cf_stack.sh
+- ./validate-templates.sh
+- sceptre --var "profile=default" --var "region=us-east-1" launch-env prod
 - ./create_cf_stack.sh

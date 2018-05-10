@@ -1,0 +1,9 @@
+template_path: remote-templates/essentials.yaml
+stack_name: essentials
+parameters:
+  FhcrcVpnCidrip: {{ environment_variable.FhcrcVpnCidrip }}
+  OperatorEmail: aws.scicomp@sagebase.org
+  VpcPeeringRequesterAwsAccountId: "{{ environment_variable.AdmincentralAwsAccountId }}"
+hooks:
+  before_update:
+    - !cmd "aws --profile {{ var.profile }} s3 cp s3://bootstrap-awss3cloudformationbucket-19qromfd235z9/aws-infra/master/essentials.yml ./remote-templates/essentials.yaml"
