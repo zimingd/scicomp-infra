@@ -112,7 +112,7 @@ git-crypt.key
 remote-templates
 
 # lambda artifacts
-lambda/*.zip
+lambdas/*.zip
 
 # MAC Crap
 .DS_Store

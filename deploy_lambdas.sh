@@ -5,7 +5,7 @@ set -e
 S3_BUCKET="essentials-awss3lambdaartifactsbucket-1ef8sqdil160e"
 S3_BUCKET_PATH="scicomp-infra/$TRAVIS_BRANCH"
 
-LAMBDA_DIRS=$(ls -d lambda/*)
+LAMBDA_DIRS=$(ls -d lambdas/*)
 for lambda_dir in $LAMBDA_DIRS
 do
   lambda_name="${lambda_dir##*/}"
