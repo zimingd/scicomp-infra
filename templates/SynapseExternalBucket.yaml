@@ -17,6 +17,11 @@ Resources:
   SynapseExternalBucket:
     Type: "AWS::S3::Bucket"
     Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              KMSMasterKeyID: !ImportValue us-east-1-essentials-InfraKey
+              SSEAlgorithm: aws:kms
       CorsConfiguration:
         CorsRules:
           - Id: SynapseCORSRule
