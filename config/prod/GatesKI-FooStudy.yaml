@@ -1,0 +1,13 @@
+# Provision a Synapse External Bucket (http://docs.synapse.org/articles/custom_storage_location.html)
+template_path: templates/SynapseExternalBucket.yaml
+stack_name: GatesKI-FooStudy
+parameters:
+  # true for read-write bucket, false (default) for read-only bucket 
+  AllowWriteBucket: "true"
+  # Synapse username for read-write bucket
+  SynapseUserName: "kdaily"
+  # Encrypt the bucket
+  EncryptBucket: "true"
+hooks:
+  after_create:
+    - !cmd "auto-provision/SynapseExternalBucketHelper.sh GatesKI-FooStudy"
