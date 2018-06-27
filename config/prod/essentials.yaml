@@ -1,7 +1,6 @@
 template_path: remote-templates/essentials.yaml
 stack_name: essentials
 parameters:
-  FhcrcVpnCidrip: {{ environment_variable.FhcrcVpnCidrip }}
   OperatorEmail: {{ environment_variable.OperatorEmail }}
   VpcPeeringRequesterAwsAccountId: "{{ environment_variable.AdmincentralAwsAccountId }}"
 hooks:
