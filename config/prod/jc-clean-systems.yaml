@@ -1,0 +1,4 @@
+template_path: templates/jumpcloud.yaml
+stack_name: jc-clean-systems
+parameters:
+  JcServiceApiKey: {{ environment_variable.JcServiceApiKey }}

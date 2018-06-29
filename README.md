@@ -9,7 +9,7 @@ Install, configure and manage the AWS scicomp account.
 git-crypt unlock
 # set env vars
 source env_vars && source env_vars.secret
-# Run commands in update_cf_stack.sh to update CF stacks
+# Update CF stacks with sceptre
 ```
 
 The above should setup resources for the account.  Once the infrastructure for the account has been setup
@@ -25,7 +25,7 @@ you can access and view the account using the [AWS console](https://AWS-account-
 aws --profile scicomp --region us-east-1 \
 cloudformation create-stack --stack-name khai-instance1 \
 --capabilities CAPABILITY_NAMED_IAM \
---template-url https://s3.amazonaws.com/bootstrap-awss3cloudformationbucket-114n2ojlbvj21/scicomp-infra/master/accounts.yml \
+--template-url https://s3.amazonaws.com/bootstrap-awss3cloudformationbucket-114n2ojlbvj21/scicomp-infra/master/accounts.yaml \
 --parameters \
 ParameterKey=InstanceType,ParameterValue="t2.nano" \
 ParameterKey=JcServiceApiKey,ParameterValue="abcd111122223333aaaabbbbccccddddeeeeffff" \
@@ -91,9 +91,8 @@ curl -X DELETE https://console.jumpcloud.com/api/systems/5aabfa45f626352a235780a
 ```
 
 ## Continuous Integration
-We have configured Travis to deploy CF template updates.  Travis does this by running update_cf_stack.sh on every
-change.
-
+We have configured Travis to deploy CF template updates.  Travis deploys using
+[sceptre](https://sceptre.cloudreach.com/latest/about.html)
 
 # Contributions
 

@@ -1,0 +1,10 @@
+template_path: remote-templates/peer-route-config.yaml
+stack_name: peer-vpn-computevpc
+parameters:
+  PeeringConnectionId: pcx-7e3bec16
+  VpcPrivateRouteTable: rtb-5f73c623
+  VpcPublicRouteTable: rtb-6e7fca12
+  VpnCidr: 10.1.0.0/16
+hooks:
+  before_update:
+    - !cmd "aws --profile {{ var.profile }} s3 cp s3://{{ environment_variable.AdminCentralInfraCfBucket }}/aws-infra/master/peer-route-config.yaml ./remote-templates/peer-route-config.yaml"
