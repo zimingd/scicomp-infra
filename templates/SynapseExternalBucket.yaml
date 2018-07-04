@@ -62,7 +62,7 @@ Resources:
             Effect: "Allow"
             Principal:
               AWS: "325565585839"
-            Action: "s3:ListBucket"
+            Action: "s3:ListBucket*"
             Resource: !If [EnableEncryption, !GetAtt SynapseEncryptedExternalBucket.Arn, !GetAtt SynapseExternalBucket.Arn]
           -
             Sid: "WriteAccess"
