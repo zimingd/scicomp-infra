@@ -41,8 +41,7 @@ Resources:
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
-              KMSMasterKeyID: !ImportValue us-east-1-essentials-InfraKey
-              SSEAlgorithm: aws:kms
+              SSEAlgorithm: AES256
       CorsConfiguration:
         CorsRules:
           - Id: SynapseCORSRule
