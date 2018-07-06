@@ -70,7 +70,7 @@ Resources:
             Principal:
               AWS: "325565585839"
             Action:
-              - !If [AllowWrite, "s3:*GetObject*", "s3:GetObject*"]
+              - !If [AllowWrite, "s3:*Object*", "s3:GetObject*"]
               - "s3:*MultipartUpload*"
             Resource: !If [EnableEncryption, !Sub "${SynapseEncryptedExternalBucket.Arn}/*", !Sub "${SynapseExternalBucket.Arn}/*"]
 Outputs:
