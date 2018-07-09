@@ -21,7 +21,7 @@ Resources:
         Variables:
           JC_SERVICE_API_KEY: !Ref JcServiceApiKey
       Code:
-        S3Bucket: "essentials-awss3lambdaartifactsbucket-1ef8sqdil160e"
+        S3Bucket: !ImportValue us-east-1-essentials-LambdaArtifactsBucket
         S3Key: "scicomp-infra/master/jumpcloud.zip"
   PeriodicEvent:
     Type: AWS::Events::Rule
