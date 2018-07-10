@@ -37,6 +37,7 @@ Resources:
       UserName: thomas.yu@sagebase.org
       Groups:
         - !Ref AWSIAMDeveloperUsersGroup
+        - !Ref AWSIAMBatchOperatorUsersGroup
       LoginProfile:
         Password: !Ref InitNewUserPassword
         PasswordResetRequired: true
@@ -47,11 +48,15 @@ Resources:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/PowerUserAccess
         - arn:aws:iam::aws:policy/IAMReadOnlyAccess
-        - arn:aws:iam::aws:policy/AWSBatchFullAccess
         - !Ref AWSIAMEnforceMfaPolicy
         - !Ref AWSIAMDynamoDenyDeletePolicy
         - !Ref AWSIAMRdsDenyDeletePolicy
-        
+  AWSIAMBatchOperatorUsersGroup:
+    Type: 'AWS::IAM::Group'
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSBatchFullAccess
+        - arn:aws:iam::aws:policy/service-role/AWSBatchServiceRole
   AWSIAMAdminRole:
     Type: "AWS::IAM::Role"
     Properties:
