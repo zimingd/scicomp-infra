@@ -37,6 +37,9 @@ Resources:
             AllowedOrigins: ['*']
             AllowedMethods: [GET, POST, PUT, HEAD]
             MaxAge: '3000'
+      Tags:
+        - Key: "OwnerEmail"
+          Value: !Ref OwnerEmail
   SynapseEncryptedExternalBucket:
     Type: "AWS::S3::Bucket"
     Condition: EnableEncryption
@@ -52,6 +55,9 @@ Resources:
             AllowedOrigins: ['*']
             AllowedMethods: [GET, POST, PUT, HEAD]
             MaxAge: '3000'
+      Tags:
+        - Key: "OwnerEmail"
+          Value: !Ref OwnerEmail
   ExternalBucketPolicy:
     Type: "AWS::S3::BucketPolicy"
     Properties:
