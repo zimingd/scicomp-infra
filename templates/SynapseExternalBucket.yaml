@@ -18,6 +18,9 @@ Parameters:
   SynapseUserName:
     Type: String
     Description: Synapse user for read-write bucket
+  OwnerEmail:
+    Type: String
+    Description: The bucket owner's email address
 Conditions:
   AllowWrite: !Equals [!Ref AllowWriteBucket, true]
   EnableEncryption: !Equals [!Ref EncryptBucket, true]
@@ -87,3 +90,7 @@ Outputs:
     Value: !Ref SynapseUserName
     Export:
       Name: !Sub '${AWS::Region}-${AWS::StackName}-SynapseUserName'
+  OwnerEmail:
+    Value: !Ref OwnerEmail
+    Export:
+      Name: !Sub '${AWS::Region}-${AWS::StackName}-OwnerEmail'
