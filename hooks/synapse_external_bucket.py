@@ -24,7 +24,7 @@ Example:
       # true to encrypt bucket, false (default) for no encryption
       EncryptBucket: "true"
       # Bucket owner's email address
-      OwnerEmail: jsmith@sagebase.org
+      OwnerEmail: "jsmith@sagebase.org"
     hooks:
       after_create:
         - !synapse_external_bucket
@@ -44,9 +44,12 @@ class SynapseExternalBucket(Hook):
         """
         synapse_username = self.stack_config['parameters']['SynapseUserName']
         owner_email = self.stack_config['parameters']['OwnerEmail']
+        allow_write_bucket = self.stack_config['parameters']['AllowWriteBucket']
 
-        synapse_bucket = self.get_synapse_bucket()
-        self.create_owner_file(synapse_username, synapse_bucket)
+        if allow_write_bucket.lower() == 'true':
+            synapse_bucket = self.get_synapse_bucket()
+            self.create_owner_file(synapse_username, synapse_bucket)
+
         self.email_owner(owner_email, synapse_bucket)
 
 
