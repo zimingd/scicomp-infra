@@ -42,35 +42,49 @@ class SynapseExternalBucket(Hook):
         run is the method called by Sceptre. It should carry out the work
         intended by this hook.
         """
-        synapse_username = self.stack_config['parameters']['SynapseUserName']
-        owner_email = self.stack_config['parameters']['OwnerEmail']
-        allow_write_bucket = self.stack_config['parameters']['AllowWriteBucket']
+        region = self.environment_config['region']
+        stack_name = self.stack_config['stack_name']
+
+        # Defaults parameters allows user to optionally specify them in scepter
+        # Therefore we need to get parameter values from cloudformation
+        response = self.request_cf_decribe_stacks(stack_name)
+        stack_parameters = response['Stacks'][0]['Parameters']
+        stack_outputs = response['Stacks'][0]['Outputs']
+        synapse_username = self.get_parameter_value(stack_parameters, 'SynapseUserName')
+        allow_write_bucket = self.get_parameter_value(stack_parameters, 'AllowWriteBucket')
+        owner_email = self.get_parameter_value(stack_parameters, 'OwnerEmail')
+        # Bucket name is auto generated and only available in CF outputs
+        synapse_bucket = self.get_output_value(stack_outputs,
+                                               region + '-' + stack_name + '-' + 'SynapseExternalBucket')
+        self.logger.info("Synapse external bucket name: " +  synapse_bucket)
 
         if allow_write_bucket.lower() == 'true':
-            synapse_bucket = self.get_synapse_bucket()
             self.create_owner_file(synapse_username, synapse_bucket)
 
         self.email_owner(owner_email, synapse_bucket)
 
-
-    def get_synapse_bucket(self):
+    def request_cf_decribe_stacks(self, stack_name):
         client = self.connection_manager.boto_session.client('cloudformation')
 
         try:
-            response = client.list_exports()
-            stack_name = self.stack_config['stack_name']
-            export_key = self.environment_config['region'] + '-' + stack_name + '-' + 'SynapseExternalBucket'
-            export_val = self.find_export_value(response, export_key)
-            return export_val
+            response = client.describe_stacks(StackName=stack_name)
+            return response
         except ClientError as e:
             self.logger.error(e.response['Error']['Message'])
 
-    def find_export_value(self, json, key):
-        for export in json['Exports']:
-            if export['Name'] == key:
-                return export['Value']
+    def get_parameter_value(self, parameters, key):
+        for parameter in parameters:
+            if parameter['ParameterKey'] == key:
+                return parameter['ParameterValue']
 
-        raise UndefinedExportException("Export not found: " + key)
+        raise UndefinedParameterException("Parameter not found: " + key)
+
+    def get_output_value(self, exports, name):
+        for export in exports:
+            if export['ExportName'] == name:
+                return export['OutputValue']
+
+        raise UndefinedExportException("Export not found: " + name)
 
     def create_owner_file(self, synapse_username, synapse_bucket):
         client = self.connection_manager.boto_session.client('s3')
@@ -154,8 +168,13 @@ class SynapseExternalBucket(Hook):
         except ClientError as e:
             self.logger.error(e.response['Error']['Message'])
         else:
-            self.logger.info("Email sent! Message ID:" + response['MessageId']),
+            self.logger.info("Email sent to " + RECIPIENT)
+            self.logger.info("Message ID: " + response['MessageId'])
 
 
 class UndefinedExportException(Exception):
+    pass
+
+
+class UndefinedParameterException(Exception):
     pass
