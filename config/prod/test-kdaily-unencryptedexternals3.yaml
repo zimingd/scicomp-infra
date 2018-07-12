@@ -12,4 +12,4 @@ parameters:
   OwnerEmail: kenneth.daily@sagebase.org
 hooks:
   after_create:
-    - !cmd "auto-provision/SynapseExternalBucketHelper.sh test1-kdaily-unencryptedexternals3"
+    - !synapse_external_bucket
