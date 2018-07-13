@@ -4,6 +4,8 @@ Install, configure and manage the AWS scicomp account.
 
 ## Instructions to create or update CF stacks
 
+need to redo this..
+
 ```
 # unlock repo
 git-crypt unlock
