@@ -7,6 +7,11 @@
 COMMITTER_EMAIL="$(git log -2 $TRAVIS_COMMIT --pretty="%cE"|grep -v -m1 noreply@github.com)"
 AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
 
+# Get jumpcloud parameters
+JC_CONNECT_KEY="$(aws ssm get-parameter --name "/infra/JcConnectKey" --with-decryption | jq -r '.Parameter.Value')"
+JC_SERVICE_API_KEY="$(aws ssm get-parameter --name "/infra/JcServiceApiKey" --with-decryption | jq -r '.Parameter.Value')"
+JC_SYSTEM_GROUP_ID="$(aws ssm get-parameter --name "/infra/JcSystemsGroupId" --with-decryption | jq -r '.Parameter.Value')"
+
 # Function to provision EC2 instances. The stack_name is always prepended by "ap-"
 function provision_ec2 {
   local l_stack_name="ap-$1"
@@ -19,7 +24,6 @@ function provision_ec2 {
   --stack-name $l_stack_name \
   --capabilities CAPABILITY_NAMED_IAM \
   --on-failure DELETE \
-  --notification-arns $CloudformationNotifyLambdaTopicArn \
   --template-body file://$l_cf_template \
   --parameters \
   ParameterKey=VpcName,ParameterValue="computevpc" \
@@ -29,9 +33,9 @@ function provision_ec2 {
   ParameterKey=Project,ParameterValue=\"$l_project\" \
   ParameterKey=OwnerEmail,ParameterValue=\"$COMMITTER_EMAIL\" \
   ParameterKey=InstanceType,ParameterValue=\"$l_instance_type\" \
-  ParameterKey=JcServiceApiKey,ParameterValue=\"$JcServiceApiKey\" \
-  ParameterKey=JcSystemsGroupId,ParameterValue=\"$JcSystemsGroupId\" \
-  ParameterKey=JcConnectKey,ParameterValue=\"$JcConnectKey\""
+  ParameterKey=JcServiceApiKey,ParameterValue=\"$JC_SERVICE_API_KEY\" \
+  ParameterKey=JcSystemsGroupId,ParameterValue=\"$JC_SYSTEM_GROUP_ID\" \
+  ParameterKey=JcConnectKey,ParameterValue=\"$JC_CONNECT_KEY\""
   local l_message=$($l_provision_cmd 2>&1 1>/dev/null)
   local l_status_code=$(echo $?)
   if [[ $l_status_code -ne 0 ]]; then
@@ -53,7 +57,7 @@ function provision_ec2 {
       local l_instance_ip="$(aws cloudformation describe-stacks --stack-name $l_stack_name | jq -r '.Stacks[0].Outputs[0].OutputValue')"
       aws ses send-email --to "$COMMITTER_EMAIL" --subject "Scicomp Automated Provisioning" \
       --text "An EC2 instance has been provisioned for you. To connect to this resource, login to the Sage VPN then type \"ssh <YOUR_JUMPCLOUD_USERNAME>@$l_instance_ip\" (i.e. ssh jsmith@$l_instance_ip)" \
-      --from "$OperatorEmail"
+      --from "aws.scicomp@sagebase.org"
     fi
   fi
   return 0
