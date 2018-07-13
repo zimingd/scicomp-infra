@@ -7,4 +7,4 @@ parameters:
   VpnCidr: 10.1.0.0/16
 hooks:
   before_update:
-    - !cmd "aws --profile {{ var.profile }} s3 cp s3://{{ environment_variable.AdminCentralInfraCfBucket }}/aws-infra/master/peer-route-config.yaml ./remote-templates/peer-route-config.yaml"
+    - !cmd "curl https://raw.githubusercontent.com/Sage-Bionetworks/aws-infra/master/templates/peer-route-config.yaml --create-dirs -o remote-templates/peer-route-config.yaml"

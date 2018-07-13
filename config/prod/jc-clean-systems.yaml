@@ -3,4 +3,4 @@ stack_name: jc-clean-systems
 dependencies:
   - essentials
 parameters:
-  JcServiceApiKey: {{ environment_variable.JcServiceApiKey }}
+  JcServiceApiKey: !ssm /infra/JcServiceApiKey
