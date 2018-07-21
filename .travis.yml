@@ -9,7 +9,6 @@ install:
 - ./setup_aws_cli.sh || travis_terminate 1
 - ./setup_sceptre.sh || travis_terminate 1
 script:
-- ./deploy_lambdas.sh || travis_terminate 1
 - ./validate-templates.sh || travis_terminate 1
 - sceptre --var "profile=default" --var "region=us-east-1" launch-env prod
 - pushd auto-provision && ./create_cf_stack.sh && popd || travis_terminate 1
