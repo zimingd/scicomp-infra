@@ -55,7 +55,6 @@ Resources:
       LifecycleConfiguration:
         Rules:
         - Id: GlacierRule
-          Prefix: glacier
           Status: !Ref EnableGlacierLifeCycle
           ExpirationInDays: !Ref GlacierExpiration
           Transitions:
@@ -82,7 +81,6 @@ Resources:
       LifecycleConfiguration:
         Rules:
         - Id: GlacierRule
-          Prefix: glacier
           Status: !Ref EnableGlacierLifeCycle
           ExpirationInDays: !Ref GlacierExpiration
           Transitions:
