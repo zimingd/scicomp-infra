@@ -30,12 +30,12 @@ Parameters:
     Default: false
   GlacierTransition:
     Type: Number
-    Description: Number of days until S3 objects are replicated to Glacier
+    Description: Number of days until S3 objects are moved to Glacier
     Default: 30
   GlacierExpiration:
     Type: Number
     Description: Number of days (from creation) when objects are deleted from S3 and Glacier
-    Default: 365
+    Default: 365000
 Conditions:
   AllowWrite: !Equals [!Ref AllowWriteBucket, true]
   EnableEncryption: !Equals [!Ref EncryptBucket, true]
