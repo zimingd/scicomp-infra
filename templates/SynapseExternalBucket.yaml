@@ -23,11 +23,11 @@ Parameters:
     Description: The bucket owner's email address
   EnableGlacierLifeCycle:
     Type: String
-    Description: true to enable a Glacier life cycle rule, false (default)
+    Description: Enabled to enable Glacier lifecycle rule, default is Disabled
     AllowedValues:
-      - true
-      - false
-    Default: false
+      - Enabled
+      - Disabled
+    Default: Disabled
   GlacierTransition:
     Type: Number
     Description: Number of days until S3 objects are moved to Glacier
