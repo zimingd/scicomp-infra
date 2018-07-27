@@ -21,6 +21,21 @@ Parameters:
   OwnerEmail:
     Type: String
     Description: The bucket owner's email address
+  EnableGlacierLifeCycle:
+    Type: String
+    Description: Enabled to enable Glacier lifecycle rule, default is Disabled
+    AllowedValues:
+      - Enabled
+      - Disabled
+    Default: Disabled
+  GlacierTransition:
+    Type: Number
+    Description: Number of days until S3 objects are moved to Glacier
+    Default: 30
+  GlacierExpiration:
+    Type: Number
+    Description: Number of days (from creation) when objects are deleted from S3 and Glacier
+    Default: 365000
 Conditions:
   AllowWrite: !Equals [!Ref AllowWriteBucket, true]
   EnableEncryption: !Equals [!Ref EncryptBucket, true]
@@ -37,6 +52,14 @@ Resources:
             AllowedOrigins: ['*']
             AllowedMethods: [GET, POST, PUT, HEAD]
             MaxAge: '3000'
+      LifecycleConfiguration:
+        Rules:
+        - Id: GlacierRule
+          Status: !Ref EnableGlacierLifeCycle
+          ExpirationInDays: !Ref GlacierExpiration
+          Transitions:
+            - TransitionInDays: !Ref GlacierTransition
+              StorageClass: Glacier
       Tags:
         - Key: "OwnerEmail"
           Value: !Ref OwnerEmail
@@ -55,6 +78,14 @@ Resources:
             AllowedOrigins: ['*']
             AllowedMethods: [GET, POST, PUT, HEAD]
             MaxAge: '3000'
+      LifecycleConfiguration:
+        Rules:
+        - Id: GlacierRule
+          Status: !Ref EnableGlacierLifeCycle
+          ExpirationInDays: !Ref GlacierExpiration
+          Transitions:
+            - TransitionInDays: !Ref GlacierTransition
+              StorageClass: Glacier
       Tags:
         - Key: "OwnerEmail"
           Value: !Ref OwnerEmail
