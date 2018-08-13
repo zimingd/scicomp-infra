@@ -15,6 +15,13 @@ Parameters:
       - true
       - false
     Default: false
+  BucketVersioning:
+    Type: String
+    Description: Enabled to enable bucket versionsing, default is Suspended
+    AllowedValues:
+      - Enabled
+      - Suspended
+    Default: Suspended
   SynapseUserName:
     Type: String
     Description: Synapse user for read-write bucket
@@ -45,6 +52,8 @@ Resources:
     Type: "AWS::S3::Bucket"
     Condition: DisableEncryption
     Properties:
+      VersioningConfiguration:
+        Status: !Ref BucketVersioning
       CorsConfiguration:
         CorsRules:
           - Id: SynapseCORSRule
@@ -67,6 +76,8 @@ Resources:
     Type: "AWS::S3::Bucket"
     Condition: EnableEncryption
     Properties:
+      VersioningConfiguration:
+        Status: !Ref BucketVersioning
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
