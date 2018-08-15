@@ -3,6 +3,9 @@ language: python
 python: 3.5
 cache: pip
 fast_finish: true
+branches:
+  only:
+  - master
 install:
 - wget https://github.com/Sage-Bionetworks/infra-utils/archive/master.zip -O /tmp/infra-utils.zip
 - unzip -j -n /tmp/infra-utils.zip -x "infra-utils-master/.gitignore" "infra-utils-master/LICENSE" "infra-utils-master/*.md" "infra-utils-master/aws/*"
@@ -12,3 +15,4 @@ script:
 - ./validate-templates.sh || travis_terminate 1
 - sceptre --var "profile=default" --var "region=us-east-1" launch-env prod
 - pushd auto-provision && ./create_cf_stack.sh && popd || travis_terminate 1
+
