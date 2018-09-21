@@ -3,7 +3,7 @@ template_path: templates/SynapseExternalBucket.yaml
 stack_name: test-AMP-Emory-Bucket
 parameters:
   # true for read-write bucket, false (default) for read-only bucket
-  AllowWriteBucket: "false"
+  AllowWriteBucket: "true"
   # Synapse username
   SynapseUserName: "yooree"
   # true to encrypt bucket, false (default) for no encryption
