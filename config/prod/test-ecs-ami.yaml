@@ -11,9 +11,7 @@ parameters:
   # The resource owner
   OwnerEmail: "khai.do@sagebase.org"
   # EC2 instance type (available types https://aws.amazon.com/ec2/instance-types/)
-  InstanceType: "t2.medium"
-  # Docker optimized ami https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html
-  AMIId: "ami-0b9a214f40c38d5eb"
+  InstanceType: "t2.large"
 
   # Integrate with our cloud directory service (do not change)
   JcConnectKey: !ssm /infra/JcConnectKey
