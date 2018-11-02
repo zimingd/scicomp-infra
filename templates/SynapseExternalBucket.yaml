@@ -35,9 +35,11 @@ Parameters:
   SynapseUserName:
     Type: String
     Description: Synapse user for read-write bucket
+    AllowedPattern: ".+" # makes this parameter required
   OwnerEmail:
     Type: String
     Description: The bucket owner's email address
+    AllowedPattern: ".+" # makes this parameter required
   EnableGlacierLifeCycle:
     Type: String
     Description: Enabled to enable Glacier lifecycle rule, default is Disabled
